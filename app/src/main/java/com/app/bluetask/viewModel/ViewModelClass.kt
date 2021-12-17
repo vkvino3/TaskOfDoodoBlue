@@ -15,7 +15,7 @@ class ViewModelClass(val dataItem: DataItem) : BaseObservable() {
     @Bindable
     fun getChangePrice(): String{
        //return dataItem.changePercent24Hr!!
-        return String.format("%.2f",dataItem.changePercent24Hr!!)
+        return String.format("%.2f",dataItem.changePercent24Hr!!.toFloat())
     }
 
 

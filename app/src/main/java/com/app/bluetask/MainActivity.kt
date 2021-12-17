@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.app.bluetask.client.ApiClient
 import com.app.bluetask.client.ApiInterface
 import com.app.bluetask.databinding.ActivityMainBinding
@@ -24,12 +25,13 @@ import com.app.bluetask.viewModel.BitcoinViewModel
 import com.app.bluetask.viewModel.MyViewModelFactory
 import com.app.bluetask.viewModel.ViewModelClass
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
     private val TAG = "MainActivity"
     private lateinit var binding: ActivityMainBinding
     lateinit var bitcoinViewModel: BitcoinViewModel
     private var dataItemList: ArrayList<DataItem> = ArrayList()
     private val retrofitInstance=ApiClient().getClient()
+
     private lateinit var adapter: BitcoinAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         bitcoinViewModel.fetchBitcoin().observe(this, Observer {
             Log.d(TAG, "onCreate: bit coin response ")
             val bitCoinResponse=it
+            binding.swiperLayout.isRefreshing=false
             dataItemList.clear()
             dataItemList.addAll(bitCoinResponse.data as ArrayList<DataItem>)
             adapter.setDataItem(dataItemList)
@@ -50,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager=LinearLayoutManager(this)
         binding.recyclerView.adapter=adapter
         bitcoinViewModel.fetchBitcoin()
+        binding.swiperLayout.setOnRefreshListener(this)
     }
 
     inner class BitcoinAdapter(private var arrayList: ArrayList<DataItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -79,6 +83,11 @@ class MainActivity : AppCompatActivity() {
         override fun getItemCount(): Int {
             return  arrayList.size
         }
+    }
+
+    override fun onRefresh() {
+        binding.swiperLayout.isRefreshing=true
+        bitcoinViewModel.fetchBitcoin()
     }
 
 

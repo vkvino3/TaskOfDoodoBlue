@@ -11,9 +11,6 @@ import retrofit2.Response
 
 class BitcoinViewModel(private val mainRepository: MainRepository) : ViewModel() {
 
-    private val bitCoinResponse= MutableLiveData<BitCoinResponse>()
-    
-
     fun fetchBitcoin(): MutableLiveData<BitCoinResponse> {
         return mainRepository.getBitcoin()
     }

@@ -30,4 +30,8 @@ class MainRepository(private val apiInterface: ApiInterface) {
         return bitCoinResponse
     }
 
+    fun getSearchCoin(){
+
+    }
+
 }
