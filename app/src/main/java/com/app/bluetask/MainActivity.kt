@@ -3,10 +3,13 @@ package com.app.bluetask
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -47,13 +50,38 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
             adapter.setDataItem(dataItemList)
             adapter.notifyDataSetChanged()
         })
+        bitcoinViewModel.getErrorResponse().observe(this, Observer {
+            Toast.makeText(this@MainActivity,it,Toast.LENGTH_LONG).show()
+            binding.swiperLayout.isRefreshing=false
+        })
         adapter=BitcoinAdapter(dataItemList)
         binding.recyclerView.setHasFixedSize(false)
         binding.recyclerView.addItemDecoration(DividerItemDecoration(this,LinearLayoutManager.VERTICAL))
         binding.recyclerView.layoutManager=LinearLayoutManager(this)
         binding.recyclerView.adapter=adapter
-        bitcoinViewModel.fetchBitcoin()
         binding.swiperLayout.setOnRefreshListener(this)
+        binding.searchCoins.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                bitcoinViewModel.fetchSearchCoin(binding.searchCoins.text.toString()).observe(this@MainActivity, Observer {
+                    Log.d(TAG, "onCreate: bit coin response "+it.size)
+                    val bitCoinResponse=it
+                    binding.swiperLayout.isRefreshing=false
+                    dataItemList.clear()
+                    dataItemList.addAll(bitCoinResponse as ArrayList<DataItem>)
+                    adapter.setDataItem(dataItemList)
+                    adapter.notifyDataSetChanged()
+                })
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
     }
 
     inner class BitcoinAdapter(private var arrayList: ArrayList<DataItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
