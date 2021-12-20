@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/serialNo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -25,41 +25,47 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/serialNo"
             android:id="@+id/bitcoinName"
             android:textSize="15sp"
             android:text="@{item.name}"
-            android:padding="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingEnd="10dp"
             android:textColor="@color/black"
-            app:layout_constraintWidth_percent=".5"
+            app:layout_constraintWidth_percent=".45"
             android:layout_width="0dp"
             android:maxLines="1"
             android:layout_height="wrap_content"/>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/price"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:text="@{viewModelClass.price}"
-            android:padding="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingEnd="10dp"
             android:maxLines="1"
             app:layout_constraintStart_toEndOf="@id/bitcoinName"
             android:textStyle="bold"
-            app:layout_constraintWidth_percent=".2"
+            app:layout_constraintWidth_percent=".25"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/change"
             android:textColor="@color/red"
             android:maxLines="1"
             android:text="@{viewModelClass.changePrice}"
-            android:padding="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingEnd="10dp"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@id/price"
             android:layout_width="0dp"

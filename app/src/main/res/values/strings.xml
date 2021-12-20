@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">BlueTask</string>
-    <string name="prices">Prices</string>
     <string name="change_price">Change Price</string>
     <string name="price">Price</string>
     <string name="name">Name</string>
     <string name="search_coins">Search Coins</string>
-    <string name="global_market_cap">Global Market Cap :</string>
+    <string name="global_market_cap">Global Market Cap : 0.0</string>
+    <string name="prices">Prices</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="favorites">Favorites</string>
+    <string name="invest">Invest</string>
+    <string name="news">NEWS</string>
+    <string name="portfolio">Portfolio</string>
 </resources>
